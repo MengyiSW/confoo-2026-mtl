@@ -3,3 +3,6 @@
 
 # any files visual studio code relation
 .vscode/
+
+# any files related to claude ai assistant
+.claude/
