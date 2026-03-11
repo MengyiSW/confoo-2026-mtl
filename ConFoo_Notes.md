@@ -198,9 +198,9 @@ Semira argued that the principles of DevOps — automation, repeatability, fast 
 - ✅ MLOps is not a separate discipline — it's DevOps extended, and the same principles apply.
 
 # 🤩 Favorite
-Boosting Frontend Speed: Quick Wins for Backend Developers - Now for Compass
-From Vulnerability to Victory: Java Security Essentials - Now for Compass
-Context-Aware Copilots for Next.js - Future what we can do
+- Boosting Frontend Speed: Quick Wins for Backend Developers - Now for Compass
+- From Vulnerability to Victory: Java Security Essentials - Now for Compass
+- Context-Aware Copilots for Next.js - Future what we can do
 
 
 ---
@@ -439,9 +439,9 @@ Observability alone isn't governance. Carl distinguished between *watching* agen
 
 
 # 🤩 Favorite
-Java Concurrency Face-Off: Virtual Threads vs Reactive - Now for Compass
-GitOps with FluxCD, Kubernetes and Kubeseal - Now for Compass
-Database DevOps with Containers - waiting for slides, will review photos that have been taken
+- Java Concurrency Face-Off: Virtual Threads vs Reactive - Now for Compass
+- GitOps with FluxCD, Kubernetes and Kubeseal - Now for Compass
+- Database DevOps with Containers - waiting for slides, will review photos that have been taken
 
 ---
 # ConFoo Conference — Day 3 Notes
@@ -784,8 +784,8 @@ Maxime closed the conference with a career reflection and a practical guide. He 
 
 ---
 # 🤩 Favorite
-How I Automated My Life with MCP Servers - Future what we can do
-Context Engineering Techniques - Now for development
+- How I Automated My Life with MCP Servers - Future what we can do
+- Context Engineering Techniques - Now for development
 
 ---
 
