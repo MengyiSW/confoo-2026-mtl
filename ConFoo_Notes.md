@@ -6,7 +6,7 @@
 ## Session 1 — Boosting Frontend Speed: Quick Wins for Backend Developers
 **Speaker:** Paul Conroy
 
-Paul's talk zeroed in on a common blind spot for backend-focused developers: the browser's rendering pipeline and how small, measurable changes to assets like images, fonts, and videos can dramatically improve user experience. You don't need deep frontend expertise — just the right metrics and the right tools.
+Paul's talk zeroed in on a common blind spot for backend-focused developers: the browser's rendering pipeline and how small, measurable changes to assets like images, fonts, and videos can dramatically improve user experience. We don't need deep frontend expertise — just the right metrics and the right tools.
 
 ### Core Web Vitals & Measurement
 
@@ -41,16 +41,16 @@ Ads are a notorious source of CLS because their sizes are often unknown until th
 
 ### Fonts
 
-- **Font subsetting:** only load the characters your language actually uses. A full Latin font can exceed 200KB; a subset may be under 30KB.
+- **Font subsetting:** only load the characters our language actually uses. A full Latin font can exceed 200KB; a subset may be under 30KB.
 - Use `font-display: swap` to prevent invisible text (FOIT) while the custom font loads.
-- The `size-adjust` CSS descriptor matches a fallback font's metrics to your custom font, virtually eliminating layout shift during font swap.
+- The `size-adjust` CSS descriptor matches a fallback font's metrics to our custom font, virtually eliminating layout shift during font swap.
 - Preload critical fonts with `<link rel="preload">` to fetch them earlier in the loading waterfall.
 
 ### Key Takeaways
 
 - ✅ Measure first with Lighthouse and PageSpeed Insights — data drives prioritization.
 - ✅ Switching images from JPEG to WebP/AVIF is a one-time change with lasting 25–50% size savings.
-- ✅ Always set explicit image dimensions to prevent CLS and protect your Core Web Vitals score.
+- ✅ Always set explicit image dimensions to prevent CLS and protect our Core Web Vitals score.
 - ✅ Font subsetting and `font-display: swap` are quick wins that improve both perceived and measured performance.
 - ✅ Reserve ad slot space in CSS upfront to prevent the 2-click penalty and layout instability.
 
@@ -59,38 +59,38 @@ Ads are a notorious source of CLS because their sizes are often unknown until th
 ## Session 2 — From Vulnerability to Victory: Java Security Essentials
 **Speaker:** Anthony Dahanne
 
-Anthony demystified the Java security ecosystem from the ground up: how vulnerabilities are discovered, scored, and disclosed; which databases track them; and which tools you can plug into your build pipeline to detect and remediate issues. He also addressed the underrated risk of framework End-of-Life (EOL).
+Anthony demystified the Java security ecosystem from the ground up: how vulnerabilities are discovered, scored, and disclosed; which databases track them; and which tools we can plug into our build pipeline to detect and remediate issues. He also addressed the underrated risk of framework End-of-Life (EOL).
 
 ### The Vulnerability Lifecycle
 
 - **Discovery:** Researchers or automated scanners find a flaw in a library or runtime.
 - **CVSS Scoring:** The Common Vulnerability Scoring System rates severity 0–10. Scores above 9.0 are Critical and require immediate action.
 - **Disclosure:** Coordinated disclosure is the norm — vendors are notified privately before public announcement to allow patching.
-- **Databases:** NVD (National Vulnerability Database), GitHub Advisory Database, and OSS Index are the primary sources. Tools query these to check your dependencies.
+- **Databases:** NVD (National Vulnerability Database), GitHub Advisory Database, and OSS Index are the primary sources. Tools query these to check our dependencies.
 
 ### Key Tools
 
 | Tool | Purpose |
 |------|---------|
-| **SBOM** (Software Bill of Materials) | Machine-readable inventory of all dependencies and versions. Formats: SPDX and CycloneDX. Instantly tells you if you ship a vulnerable library. |
+| **SBOM** (Software Bill of Materials) | Machine-readable inventory of all dependencies and versions. Formats: SPDX and CycloneDX. Instantly tells we if we ship a vulnerable library. |
 | **Qodana** | JetBrains' static analysis platform. Runs security and code quality inspections in CI. Native IntelliJ integration. |
 | **FindSecurityBugs** | SpotBugs plugin for security patterns in Java bytecode. Detects SQL injection, XSS, insecure random, hardcoded credentials, and more. |
 | **SonarQube** | SAST for continuous inspection. Tracks issues over time and enforces quality gates in CI. Community Edition is free. |
 | **GitLab SAST** | Built-in scanning that auto-detects language and runs analyzers on merge requests. Results surface in the Security Dashboard. |
 | **Veracode** | Commercial SAST/DAST/SCA platform for enterprise compliance (SOC 2, PCI DSS). Integrates with CI/CD and IDEs. |
-| **VEX** (Vulnerability Exploitability eXchange) | Companion to SBOMs. Declare that a known CVE is not exploitable in your context — reduces alert fatigue. |
+| **VEX** (Vulnerability Exploitability eXchange) | Companion to SBOMs. Declare that a known CVE is not exploitable in our context — reduces alert fatigue. |
 
 ### Handling Framework End-of-Life
 
 When a framework like Spring Boot 2.x or Java 8 reaches EOL, it no longer receives security patches:
 
 - Track EOL dates at [endoflife.date](https://endoflife.date) — a community-maintained resource for every major framework and runtime.
-- Build EOL upgrades into your quarterly roadmap, not as emergency work.
+- Build EOL upgrades into our quarterly roadmap, not as emergency work.
 - SBOM tooling can flag EOL components alongside CVEs, centralizing risk management.
 
 ### Key Takeaways
 
-- ✅ Generate and maintain an SBOM as part of every release — it's your security bill of lading.
+- ✅ Generate and maintain an SBOM as part of every release — it's our security bill of lading.
 - ✅ Integrate FindSecurityBugs or SonarQube into CI so vulnerabilities are caught at the PR stage, not post-deployment.
 - ✅ Use VEX files to suppress false positives and keep security noise manageable.
 - ✅ Treat framework EOL with the same urgency as a high-severity CVE — no patches means compounding risk.
@@ -108,7 +108,7 @@ Justine challenged the narrow framing of AI as just a code autocomplete tool. Th
 | Family | CI/CD Application |
 |--------|------------------|
 | **Learning & Knowledge** | Ingests documentation, runbooks, and incident history to answer developer questions. Reduces onboarding time and makes institutional knowledge searchable. |
-| **Coding Assistants** | GitHub Copilot, Cursor, JetBrains AI — generating, explaining, refactoring, and reviewing code. The differentiator is how well-integrated they are into your workflow. |
+| **Coding Assistants** | GitHub Copilot, Cursor, JetBrains AI — generating, explaining, refactoring, and reviewing code. The differentiator is how well-integrated they are into our workflow. |
 | **Automation & Agents** | Autonomously executes multi-step tasks: running test suites, triaging failed pipelines, opening PRs for dependency updates. Reduces toil. |
 | **Planning** | AI-assisted sprint forecasting and process assessment. Uses historical velocity and defect data to surface bottlenecks and predict delivery risk. |
 | **Data Exploration** | Natural-language querying of logs, metrics, and databases. Developers can investigate production issues without writing complex SQL or PromQL. |
@@ -135,7 +135,7 @@ David walked through his personal journey building high-performance Java I/O bin
 | Concept | What It Means |
 |---------|--------------|
 | **io_uring** | A Linux kernel interface (since 5.1) for async I/O using shared memory ring buffers between user space and the kernel. Dramatically reduces syscall overhead versus traditional read/write. |
-| **Proactor Pattern** | Async I/O design pattern where the OS *completes* the I/O and notifies your handler — contrast with Reactor which notifies when I/O is *ready*. io_uring is inherently proactor-style. |
+| **Proactor Pattern** | Async I/O design pattern where the OS *completes* the I/O and notifies our handler — contrast with Reactor which notifies when I/O is *ready*. io_uring is inherently proactor-style. |
 | **Project Panama / Foreign Function & Memory API** | Java's modern mechanism for calling native code and managing off-heap memory without JNI boilerplate. |
 | **Arena / Confined Memory** | Panama's `MemorySegment` arenas provide scoped, off-heap memory with deterministic lifetime — critical when passing buffers directly to the kernel to avoid GC interference. |
 | **Zero-Copy** | Avoiding unnecessary buffer copies between kernel and user space. io_uring supports registered buffers the kernel writes into directly. |
@@ -151,9 +151,9 @@ David walked through his personal journey building high-performance Java I/O bin
 
 ### Key Takeaways
 
-- ✅ io_uring is a generational leap in Linux I/O — worth understanding even if you don't write low-level bindings.
+- ✅ io_uring is a generational leap in Linux I/O — worth understanding even if we don't write low-level bindings.
 - ✅ Project Panama / Foreign Function API is the modern, safe path for Java-native interop — prefer it over JNI.
-- ✅ Off-heap arenas give you GC-safe buffers for kernel I/O — critical for avoiding stop-the-world pauses in high-throughput systems.
+- ✅ Off-heap arenas give we GC-safe buffers for kernel I/O — critical for avoiding stop-the-world pauses in high-throughput systems.
 - ✅ Measure correctly: use JMH, test with realistic workloads, and trust the profiler over intuition.
 - ✅ Zero-copy techniques can 2–5x throughput in I/O-bound applications.
 
@@ -193,7 +193,7 @@ Semira argued that the principles of DevOps — automation, repeatability, fast 
 
 - ✅ Treat model weights, training data, and hyperparameters as first-class versioned artifacts — not just code.
 - ✅ Monitor for data drift and model degradation in production; accuracy degrades silently without it.
-- ✅ Automate retraining pipelines the same way you automate build pipelines — on triggers, not manual intervention.
+- ✅ Automate retraining pipelines the same way we automate build pipelines — on triggers, not manual intervention.
 - ✅ Training/serving skew is a silent killer; feature stores eliminate it by sharing transformation logic.
 - ✅ MLOps is not a separate discipline — it's DevOps extended, and the same principles apply.
 
@@ -237,14 +237,14 @@ With virtual threads (Project Loom) now stable in Java 21, the question every Ja
 
 ### The Decision Matrix
 
-- **Choose Virtual Threads** if you have an I/O-bound workload, you value code simplicity, and your team doesn't need backpressure built into the model. This is now the right default for most REST APIs, database-heavy services, and microservices.
-- **Choose Reactive** if you genuinely need built-in backpressure (e.g., streaming pipelines, event processing where a slow consumer must signal a fast producer), or if you're already invested in a Reactor/RxJava codebase.
-- **Avoid Traditional Thread Pools** for new high-concurrency work — virtual threads obsolete the main reason you'd reach for a large thread pool.
+- **Choose Virtual Threads** if we have an I/O-bound workload, we value code simplicity, and our team doesn't need backpressure built into the model. This is now the right default for most REST APIs, database-heavy services, and microservices.
+- **Choose Reactive** if we genuinely need built-in backpressure (e.g., streaming pipelines, event processing where a slow consumer must signal a fast producer), or if we're already invested in a Reactor/RxJava codebase.
+- **Avoid Traditional Thread Pools** for new high-concurrency work — virtual threads obsolete the main reason we'd reach for a large thread pool.
 - **Watch out for pinning:** Virtual threads can get pinned to their carrier OS thread when inside `synchronized` blocks or certain native calls. Replace `synchronized` with `ReentrantLock` to avoid this.
 
 ### Key Takeaways
 
-- ✅ Virtual threads make blocking-style code scale — you get Reactive-level throughput with imperative readability.
+- ✅ Virtual threads make blocking-style code scale — we get Reactive-level throughput with imperative readability.
 - ✅ Reactive is not dead, but its use case has narrowed to scenarios requiring built-in backpressure.
 - ✅ Debugging reactive code remains genuinely hard; virtual threads restore meaningful stack traces.
 - ✅ Replace `synchronized` with `ReentrantLock` in virtual-thread-heavy code to prevent carrier thread pinning.
@@ -263,7 +263,7 @@ GitOps is an operational model where **Git is the single source of truth for clu
 
 Core principles:
 - **Declarative:** The desired state is described in files (YAML manifests, Helm charts, Kustomize overlays), not imperative scripts.
-- **Versioned:** Every change to cluster state goes through a Git commit — giving you full history, rollback, and auditability for free.
+- **Versioned:** Every change to cluster state goes through a Git commit — giving we full history, rollback, and auditability for free.
 - **Automated reconciliation:** The operator detects drift (cluster state ≠ Git state) and self-heals automatically.
 - **Pull-based:** The cluster pulls its configuration from Git, rather than CI pushing to the cluster. CI never needs cluster credentials.
 
@@ -279,17 +279,17 @@ Core principles:
 
 ### Kubeseal — Secrets in Git
 
-The hardest GitOps problem: **you can't store raw Kubernetes secrets in Git** (base64 is not encryption). Kubeseal solves this with asymmetric encryption:
+The hardest GitOps problem: **we can't store raw Kubernetes secrets in Git** (base64 is not encryption). Kubeseal solves this with asymmetric encryption:
 
 1. A `SealedSecrets` controller runs in the cluster and holds a private key.
-2. You encrypt secrets locally with `kubeseal` using the cluster's public key.
+2. We encrypt secrets locally with `kubeseal` using the cluster's public key.
 3. The resulting `SealedSecret` CRD is safe to commit to Git — only the cluster can decrypt it.
 4. On reconciliation, the controller decrypts and creates the real `Secret` in-cluster.
 
 ### Key Takeaways
 
 - ✅ GitOps shifts the question from "what did someone deploy?" to "what does Git say should be deployed?" — audit trails become automatic.
-- ✅ FluxCD's pull model means CI pipelines never need cluster credentials, reducing your attack surface significantly.
+- ✅ FluxCD's pull model means CI pipelines never need cluster credentials, reducing our attack surface significantly.
 - ✅ Kubeseal is the missing piece that makes GitOps complete — secrets encrypted in Git, decrypted only by the cluster.
 - ✅ Reconciliation loops enforce cluster hygiene — manual `kubectl` changes get reverted, preventing config drift.
 - ✅ GitOps dramatically simplifies disaster recovery: point a new cluster at the repo and reconciliation does the rest.
@@ -299,13 +299,13 @@ The hardest GitOps problem: **you can't store raw Kubernetes secrets in Git** (b
 ## Session 3 — Database DevOps with Containers
 **Speaker:** Rob Richardson
 
-Rob tackled one of the most overlooked problems in CI/CD: databases. You can spin up and tear down application containers in seconds, but the database contains state that can't just be deleted. The talk showed how to bridge this gap — getting real production-like data to developers in containers, and flowing schema changes back to production safely.
+Rob tackled one of the most overlooked problems in CI/CD: databases. We can spin up and tear down application containers in seconds, but the database contains state that can't just be deleted. The talk showed how to bridge this gap — getting real production-like data to developers in containers, and flowing schema changes back to production safely.
 
 ### The Core Problem
 
 Traditional CI/CD assumes ephemeral, stateless workloads. Databases are neither:
 
-- You can't delete the database between deployments — it holds data.
+- We can't delete the database between deployments — it holds data.
 - Developer databases are often stale, inconsistent, or don't reflect production schema.
 - Schema migrations must be forward-compatible, tested, and reversible.
 - Lookup/seed data must be kept in sync with schema changes.
@@ -318,11 +318,11 @@ TBD
 ## Session 4 — OpenTelemetry and Distributed Tracing
 **Speaker:** Marian Marinov
 
-Marian addressed one of the most painful realities of microservices: when a request fails or is slow, which of the 10 services it touched is responsible? OpenTelemetry (OTel) provides the vendor-neutral standard for capturing and correlating that signal across your entire system.
+Marian addressed one of the most painful realities of microservices: when a request fails or is slow, which of the 10 services it touched is responsible? OpenTelemetry (OTel) provides the vendor-neutral standard for capturing and correlating that signal across our entire system.
 
 ### The Observability Problem in Distributed Systems
 
-A single user request in a microservices architecture may touch an API gateway, an auth service, a product service, a database, a cache, and a message queue — each on a different server, each logging independently. Traditional per-service logging gives you fragments. You need the full picture.
+A single user request in a microservices architecture may touch an API gateway, an auth service, a product service, a database, a cache, and a message queue — each on a different server, each logging independently. Traditional per-service logging gives we fragments. We need the full picture.
 
 The three pillars of observability:
 
@@ -337,7 +337,7 @@ The three pillars of observability:
 - **Trace:** The full journey of one request. Represented as a tree of spans.
 - **Span:** A single unit of work within a trace (e.g., "query database", "call auth service"). Has a start time, duration, status, and attributes.
 - **Trace Context:** A `traceparent` header propagated across service boundaries (HTTP, gRPC, message queues). This is what links spans from different services into one trace.
-- **Collector:** The OTel Collector is a standalone agent/gateway that receives telemetry from your services, processes it (batching, sampling, enrichment), and exports to your backend (Jaeger, Zipkin, Tempo, Datadog, etc.).
+- **Collector:** The OTel Collector is a standalone agent/gateway that receives telemetry from our services, processes it (batching, sampling, enrichment), and exports to our backend (Jaeger, Zipkin, Tempo, Datadog, etc.).
 - **Auto-instrumentation:** Language-specific agents (Java agent, Node.js SDK) that instrument common frameworks (Spring, Express, JDBC) without code changes.
 
 ### Practical Architecture
@@ -350,7 +350,7 @@ The three pillars of observability:
 ```
 
 - Services emit telemetry via OTLP (OpenTelemetry Protocol) to the Collector.
-- The Collector decouples your services from the backend — swap Jaeger for Tempo without touching application code.
+- The Collector decouples our services from the backend — swap Jaeger for Tempo without touching application code.
 - Head-based sampling (decide at trace start) vs. tail-based sampling (decide after seeing the full trace) — tail-based is more powerful but requires the Collector to buffer.
 
 ### Instrumentation in Practice
@@ -361,11 +361,11 @@ The three pillars of observability:
 
 ### Key Takeaways
 
-- ✅ OpenTelemetry is now the industry standard — don't invest in proprietary instrumentation that locks you to one vendor.
-- ✅ The OTel Collector is the key architectural component — it decouples your services from whatever observability backend you choose.
-- ✅ Auto-instrumentation (Java agent, etc.) gets you 80% of the value with zero code changes — start there.
+- ✅ OpenTelemetry is now the industry standard — don't invest in proprietary instrumentation that locks we to one vendor.
+- ✅ The OTel Collector is the key architectural component — it decouples our services from whatever observability backend we choose.
+- ✅ Auto-instrumentation (Java agent, etc.) gets we 80% of the value with zero code changes — start there.
 - ✅ Context propagation across async boundaries (message queues, thread pools) is the most common gap in distributed tracing setups.
-- ✅ Tail-based sampling lets you capture all error traces without the cost of tracing every request.
+- ✅ Tail-based sampling lets we capture all error traces without the cost of tracing every request.
 
 ---
 
@@ -384,7 +384,7 @@ Traditional software fails loudly — exceptions, error codes, timeouts. AI agen
 - Token costs spike because a prompt grew unexpectedly.
 - Latency degrades because retrieval quality dropped.
 
-None of these manifest as a 500 error. Without instrumentation, you find out from users — or you don't find out at all.
+None of these manifest as a 500 error. Without instrumentation, we find out from users — or we don't find out at all.
 
 ### What to Track in LLM Observability
 
@@ -393,7 +393,7 @@ None of these manifest as a 500 error. Without instrumentation, you find out fro
 | **Prompt & completion content** | Audit trail for alignment, debugging hallucinations, and compliance. |
 | **Token usage** (input/output/total) | Cost control and detecting prompt bloat. |
 | **Latency** (TTFT, total) | User experience and SLA monitoring. TTFT = Time To First Token. |
-| **Model & version** | Regressions when model versions change silently under you. |
+| **Model & version** | Regressions when model versions change silently under we. |
 | **Tool calls** (name, input, output) | Did the agent call the right tool? With sensible parameters? |
 | **Retrieval quality** (RAG) | Were the retrieved chunks relevant? Low relevance = hallucination risk. |
 | **Error rate & type** | Rate limits, context length exceeded, tool failures. |
@@ -408,7 +408,7 @@ OpenTelemetry has published semantic conventions specifically for GenAI workload
 - `gen_ai.usage.input_tokens` / `gen_ai.usage.output_tokens` — token counts
 - `gen_ai.operation.name` — `chat`, `embeddings`, etc.
 
-Using these conventions means your traces are structured and queryable in any OTel-compatible backend, and dashboards can be shared across teams and tools.
+Using these conventions means our traces are structured and queryable in any OTel-compatible backend, and dashboards can be shared across teams and tools.
 
 ### Observability Tools Compared
 
@@ -417,7 +417,7 @@ Using these conventions means your traces are structured and queryable in any OT
 | **LangSmith** (LangChain) | Purpose-built LLM obs | Deep integration with LangChain/LangGraph. Prompt playground, dataset management, evaluations. |
 | **Langfuse** | Open-source LLM obs | Self-hostable. Strong tracing, scoring, and dataset features. OTEL-compatible. |
 | **Arize Phoenix** | Open-source LLM obs | Strong on RAG evaluation and embedding analysis. Good for retrieval quality debugging. |
-| **Datadog LLM Observability** | Commercial APM + LLM | Best if you're already on Datadog — unified view of infra + LLM traces. |
+| **Datadog LLM Observability** | Commercial APM + LLM | Best if we're already on Datadog — unified view of infra + LLM traces. |
 | **OpenTelemetry + Tempo/Jaeger** | Generic distributed tracing | Vendor-neutral. Works with GenAI semantic conventions. Best for teams already invested in OTel. |
 
 ### Governance: Supervision Beyond Logging
@@ -427,7 +427,7 @@ Observability alone isn't governance. Carl distinguished between *watching* agen
 - **Guardrails:** Input/output validators that block or flag responses outside policy (toxic content, PII leakage, off-topic). Libraries like Guardrails AI or NeMo Guardrails implement these at the application layer.
 - **Human-in-the-loop checkpoints:** For high-stakes actions (sending emails, modifying records, making purchases), require explicit human approval before execution — not just logging after the fact.
 - **Rate limiting and circuit breakers:** Apply the same resilience patterns to LLM calls as to any external API. Budget limits per user/session prevent runaway cost from prompt injection or adversarial inputs.
-- **Evals in CI:** Run automated evaluations against a golden dataset on every prompt change — treat prompt regressions the same way you treat code regressions.
+- **Evals in CI:** Run automated evaluations against a golden dataset on every prompt change — treat prompt regressions the same way we treat code regressions.
 
 ### Key Takeaways
 
@@ -452,13 +452,13 @@ Observability alone isn't governance. Carl distinguished between *watching* agen
 ## Session 1 — How I Automated My Life with MCP Servers
 **Speaker:** Cedric Clyburn
 
-Cedric opened with a relatable premise: modern developers aren't just writing code — they're also part-time Linux admins, part-time DevOps engineers, and part-time SREs. MCP (Model Context Protocol) lets you delegate the cognitive overhead of all those roles to an AI that has live access to your actual systems.
+Cedric opened with a relatable premise: modern developers aren't just writing code — they're also part-time Linux admins, part-time DevOps engineers, and part-time SREs. MCP (Model Context Protocol) lets we delegate the cognitive overhead of all those roles to an AI that has live access to our actual systems.
 
 ### What is MCP?
 
 The Model Context Protocol is an open standard (originally from Anthropic) that defines how AI models connect to external tools and data sources in a structured, composable way. Instead of copy-pasting log output into a chat window, an MCP server gives the AI direct, typed access to the resource — and the AI can query, filter, and reason over it naturally.
 
-The key insight: **MCP turns your infrastructure into a conversational interface.**
+The key insight: **MCP turns our infrastructure into a conversational interface.**
 
 ```
 User: "What's consuming the most memory in our dev cluster right now?"
@@ -480,7 +480,7 @@ No PromQL knowledge required. No context-switching to Grafana.
 | **MCP Client** | The AI host (Claude Desktop, VS Code Copilot, a custom agent) that discovers available servers and routes tool calls to them. |
 | **Tools** | Functions the AI can invoke — `kubectl_get_pods`, `prometheus_query`, `github_create_pr`. Each has a typed schema the model uses to construct valid calls. |
 | **Resources** | Read-only data the AI can access contextually — file contents, database rows, documentation pages. |
-| **Transport** | stdio (local processes) or HTTP+SSE (remote servers). Local MCP servers are just programs on your machine. |
+| **Transport** | stdio (local processes) or HTTP+SSE (remote servers). Local MCP servers are just programs on our machine. |
 
 ### Popular MCP Servers
 
@@ -490,7 +490,7 @@ No PromQL knowledge required. No context-switching to Grafana.
 | **Prometheus** | Execute PromQL queries, browse metrics, investigate spikes and anomalies. |
 | **GitHub** | Search repos, read files, create issues and PRs, review diffs. |
 | **Filesystem** | Read and write local files within a sandboxed path. |
-| **Postgres / SQLite** | Natural-language queries against your database schema. |
+| **Postgres / SQLite** | Natural-language queries against our database schema. |
 | **Slack** | Read channels, send messages, search history. |
 | **Brave Search / Fetch** | Live web search and URL fetching for grounding responses in current info. |
 | **Docker** | List containers, inspect logs, manage images. |
@@ -501,22 +501,22 @@ The real power emerges when the AI can use multiple servers in one reasoning cha
 
 > "Find all pods with memory over 1GB in the dev cluster, look up their deployment configs in GitHub, and create a Jira ticket summarising the findings."
 
-This crosses Kubernetes MCP → GitHub MCP → Jira MCP in a single natural-language request. The AI orchestrates the tool calls; you just describe the outcome you want.
+This crosses Kubernetes MCP → GitHub MCP → Jira MCP in a single natural-language request. The AI orchestrates the tool calls; we just describe the outcome we want.
 
 ### Practical Tips from Cedric
 
-- Start with one MCP server for a tool you use daily (kubectl, GitHub). The habit forms fast.
-- Local stdio MCP servers run with your own credentials — no additional auth setup needed.
+- Start with one MCP server for a tool we use daily (kubectl, GitHub). The habit forms fast.
+- Local stdio MCP servers run with our own credentials — no additional auth setup needed.
 - Be explicit in prompts: "using only the Kubernetes MCP server, list pods in the staging namespace" helps the AI pick the right tool.
 - MCP servers can be scoped — restrict filesystem access to specific directories to avoid accidents.
 
 ### Key Takeaways
 
-- ✅ MCP turns your entire toolchain into a natural-language interface — you ask questions, the AI executes the right commands.
+- ✅ MCP turns our entire toolchain into a natural-language interface — we ask questions, the AI executes the right commands.
 - ✅ Chain multiple MCP servers for cross-tool workflows that would otherwise require significant manual context-switching.
-- ✅ Local stdio servers run with your credentials and require no infrastructure — just a process on your machine.
-- ✅ The compounding effect: each MCP server you add multiplies the AI's ability to reason across your stack.
-- ✅ MCP is vendor-neutral and growing fast — investing in it now means your automation stack is portable across AI tools.
+- ✅ Local stdio servers run with our credentials and require no infrastructure — just a process on our machine.
+- ✅ The compounding effect: each MCP server we add multiplies the AI's ability to reason across our stack.
+- ✅ MCP is vendor-neutral and growing fast — investing in it now means our automation stack is portable across AI tools.
 
 ---
 
@@ -590,14 +590,14 @@ Schema sketch:
 oauth2_clients (client_id, client_secret_hash, redirect_uris[], scopes[], grant_types[], provider_metadata_url)
 ```
 
-The `provider_metadata_url` points to the provider's `.well-known/openid-configuration` endpoint, from which your server can dynamically discover all endpoint URLs — making onboarding new identity providers a data operation, not a code change.
+The `provider_metadata_url` points to the provider's `.well-known/openid-configuration` endpoint, from which our server can dynamically discover all endpoint URLs — making onboarding new identity providers a data operation, not a code change.
 
 ### Key Takeaways
 
 - ✅ Use Authorization Code + PKCE for all user-facing apps — it's the current secure standard. Implicit and ROPC flows are deprecated.
 - ✅ Use Client Credentials for service-to-service calls — clean, no-user-context machine authentication.
-- ✅ Never hand-roll OAuth2 — use a library. The "almost standards" variations will break your handcrafted implementation.
-- ✅ Database-driven client registration makes your auth system multi-tenant and extensible without code changes.
+- ✅ Never hand-roll OAuth2 — use a library. The "almost standards" variations will break our handcrafted implementation.
+- ✅ Database-driven client registration makes our auth system multi-tenant and extensible without code changes.
 - ✅ Access tokens are short-lived by design — refresh tokens are the sensitive credential; store them encrypted and never in localStorage.
 
 ---
@@ -605,7 +605,7 @@ The `provider_metadata_url` points to the provider's `.well-known/openid-configu
 ## Session 4 — LLM from Scratch: No Slides, Just Code
 **Speaker:** Alexis Fortin-Côté
 
-Alexis did something rare: a live-coding session that built a working LLM from first principles — not a toy n-gram model, but an actual transformer with attention, trained end-to-end. The goal was demystification: if you understand what goes in and what comes out at each step, the "magic" becomes engineering.
+Alexis did something rare: a live-coding session that built a working LLM from first principles — not a toy n-gram model, but an actual transformer with attention, trained end-to-end. The goal was demystification: if we understand what goes in and what comes out at each step, the "magic" becomes engineering.
 
 ### The Pipeline: What Actually Happens
 
@@ -640,7 +640,7 @@ Text can't go directly into a neural network — it must become numbers first.
 
 Each token ID maps to a dense vector (e.g., 512 or 4096 floats). These are learned during training. The embedding layer is just a lookup table.
 
-**Positional encoding** is added on top — since transformers have no inherent sense of order, positional information must be injected. Options: sinusoidal (original "Attention is All You Need"), learned, or RoPE (Rotary Position Embedding, used by LLaMA/modern models).
+**Positional encoding** is added on top — since transformers have no inherent sense of order, positional information must be injected. Options: sinusoidal (original "Attention is All We Need"), learned, or RoPE (Rotary Position Embedding, used by LLaMA/modern models).
 
 ### Step 3: The Transformer Block
 
@@ -669,7 +669,7 @@ This is the core building block, repeated N times (GPT-3 has 96 layers):
 
 ### Step 5: Inference & Sampling
 
-The model outputs a probability distribution over the full vocabulary. How you sample from it controls the "creativity" vs "accuracy" trade-off:
+The model outputs a probability distribution over the full vocabulary. How we sample from it controls the "creativity" vs "accuracy" trade-off:
 
 | Strategy | Effect |
 |----------|--------|
@@ -682,7 +682,7 @@ The model outputs a probability distribution over the full vocabulary. How you s
 
 - ✅ An LLM is a next-token predictor trained at massive scale — the "intelligence" emerges from that simple objective applied to vast data.
 - ✅ Transformers work because attention lets every token in a sequence influence every other — it scales where RNNs couldn't.
-- ✅ Temperature, top-k, and top-p are the knobs that control generation quality — understanding them helps you tune AI features in your own applications.
+- ✅ Temperature, top-k, and top-p are the knobs that control generation quality — understanding them helps we tune AI features in our own applications.
 - ✅ Tokenization is a first-class design decision: vocabulary size, tokenizer choice, and context window length all have downstream effects on model behaviour.
 - ✅ The same architecture underlies GPT-4, LLaMA, Claude, and Gemini — differences are in scale, data, and fine-tuning, not fundamental architecture.
 
@@ -699,7 +699,7 @@ Carl's second talk of the conference (following his AI observability session on 
 output = LLM(context)
 ```
 
-There is no hidden state. No memory between calls (unless you add it). No mood. The model is fully deterministic given the same context and temperature. This means **every quality problem is a context problem** — the model is doing exactly what the context tells it to, even when the result is wrong.
+There is no hidden state. No memory between calls (unless we add it). No mood. The model is fully deterministic given the same context and temperature. This means **every quality problem is a context problem** — the model is doing exactly what the context tells it to, even when the result is wrong.
 
 ### What "Context" Actually Contains
 
@@ -762,25 +762,25 @@ The key rule: **don't include memory by default — retrieve it when relevant.**
 ### Key Takeaways
 
 - ✅ Context is the application — quality problems are context problems. Debug the context before blaming the model.
-- ✅ Structure your context explicitly with delimiters and format. Models parse structure more reliably than prose instructions.
+- ✅ Structure our context explicitly with delimiters and format. Models parse structure more reliably than prose instructions.
 - ✅ Put critical instructions at the start and end of context — the middle of long contexts receives less model attention.
 - ✅ Compress and summarise long history rather than appending indefinitely — context rot is real and degrades performance.
 - ✅ Split complex tasks into focused sub-calls with clean, isolated contexts rather than piling everything into one prompt.
 
 ---
 
-## Session 6 — My Journey into Open Source and How You Can Start Too
+## Session 6 — My Journey into Open Source and How We Can Start Too
 **Speaker:** Maxime David
 
 Maxime closed the conference with a career reflection and a practical guide. He traced his arc from open-source consumer → contributor → author of a popular serverless benchmarking tool → core maintainer at Amazon, leading the AWS Lambda Runtimes team. The talk was both motivational and tactical.
 
 ### Key Takeaways
 
-- ✅ Start with documentation or tests — they are always welcome and teach you the codebase without high-stakes code risk.
-- ✅ Solve a problem you actually have — the best open source projects start as personal tools.
-- ✅ README quality is your project's first impression — invest in it proportionally to the time you invest in the code.
-- ✅ Respond to early issues and PRs fast — first contributors set the culture of your project.
-- ✅ Open source is a career compounding machine: every contribution builds your network, portfolio, and skills simultaneously.
+- ✅ Start with documentation or tests — they are always welcome and teach we the codebase without high-stakes code risk.
+- ✅ Solve a problem we actually have — the best open source projects start as personal tools.
+- ✅ README quality is our project's first impression — invest in it proportionally to the time we invest in the code.
+- ✅ Respond to early issues and PRs fast — first contributors set the culture of our project.
+- ✅ Open source is a career compounding machine: every contribution builds our network, portfolio, and skills simultaneously.
 
 ---
 # 🤩 Favorite
@@ -793,8 +793,44 @@ Maxime closed the conference with a career reflection and a practical guide. He 
 ## ConFoo — Three-Day Summary For both BE and FE
 
 
-**Measure everything.** Core Web Vitals, CVSS scores, JMH benchmarks, LLM token usage, distributed traces — every session that involved performance or reliability came back to instrumentation. If you leave ConFoo with one habit, make it: instrument before you optimize.
+**Measure everything.** Core Web Vitals, CVSS scores, JMH benchmarks, LLM token usage, distributed traces — every session that involved performance or reliability came back to instrumentation. If we leave ConFoo with one habit, make it: instrument before we optimize.
 
-**Git is the control plane.** GitOps showed that Git-as-source-of-truth extends naturally from code to infrastructure to configuration. The same pull request discipline you apply to features should apply to Kubernetes manifests and database migrations.
+**Git is the control plane.** GitOps showed that Git-as-source-of-truth extends naturally from code to infrastructure to configuration. The same pull request discipline we apply to features should apply to Kubernetes manifests and database migrations.
 
-**AI is infrastructure now.** Three days, five AI-related sessions. The message is consistent: AI is not a feature you add — it's a layer of your stack that requires the same engineering rigour as your database or your CI pipeline. Observe it, govern it, engineer its context deliberately.
+**AI is infrastructure now.** Three days, five AI-related sessions. The message is consistent: AI is not a feature we add — it's a layer of our stack that requires the same engineering rigour as our database or our CI pipeline. Observe it, govern it, engineer its context deliberately.
+
+
+## Some Ideas
+
+### Context-Engineered System Prompt Template
+*From Day 3 Session 5*
+
+A reusable prompt structure using the techniques Carl described:
+- XML-delimited sections (system, retrieved docs, history, user input)
+- Few-shot examples block
+- Compression logic for long conversation history
+
+### DevOps Automation MCP Server Or Even for our Modelers
+*From Day 3 Session 1*
+
+Build MCP servers for our specific stack (Kubernetes, GitHub, our database) so an AI can:
+- Query pods and correlate with GitHub deployment configs
+- Triage failing CI jobs by reading logs
+- Open PRs for dependency updates automatically
+
+### AI-Powered CI Pipeline Triage Agent
+*Combining Day 1 Session 3 (AI in CI/CD) + Day 2 Session 5 (AI governance) + Day 3 Session 1 (MCP)*
+
+- Agent reads failing job logs
+- Uses MCP tools (kubectl, GitHub) to investigate
+- Has guardrails + human-in-the-loop for any proposed fixes
+- Fully instrumented with LLM observability
+
+### GitOps Bootstrap Template
+*From Day 2 Session 2*
+
+A repo template with:
+- FluxCD + Kubeseal pre-wired
+- Kustomize overlays for staging/production
+- Notification Controller alerts to Slack
+- Disaster recovery out of the box
