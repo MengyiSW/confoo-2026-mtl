@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ConFoo 2026 — Conference Debrief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ==========================================
+   THEME: BOLD SIGNAL
+   Dark bg · Orange accent · Archivo Black
+   ========================================== */
+:root {
+    --bg: #1a1a1a;
+    --bg2: #212121;
+    --bg3: #2a2a2a;
+    --orange: #ff5722;
+    --orange-dim: rgba(255,87,34,0.1);
+    --on-orange: #1a1a1a;
+    --white: #ffffff;
+    --g1: #cccccc;
+    --g2: #888888;
+    --g3: #444444;
+    --g4: #2a2a2a;
+
+    --font-d: 'Archivo Black', sans-serif;
+    --font-b: 'Space Grotesk', sans-serif;
+
+    /* ALL sizes use clamp() — non-negotiable */
+    --t1: clamp(1.5rem, 5vw, 4rem);
+    --t2: clamp(1.2rem, 3.2vw, 2.4rem);
+    --t3: clamp(1rem, 2.2vw, 1.6rem);
+    --tb: clamp(0.75rem, 1.4vw, 1.05rem);
+    --ts: clamp(0.62rem, 0.9vw, 0.8rem);
+    --te: clamp(0.58rem, 0.82vw, 0.72rem);
+
+    --pad: clamp(1rem, 4vw, 4rem);
+    --gap: clamp(0.5rem, 1.8vw, 1.75rem);
+    --egap: clamp(0.25rem, 0.8vw, 0.7rem);
+
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur: 0.65s;
+}
+
+/* ==========================================
+   VIEWPORT BASE CSS (full — mandatory)
+   ========================================== */
+html, body { height: 100%; overflow-x: hidden; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+.slide {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;              /* CRITICAL */
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 100%;
+    overflow: hidden;
+    padding: var(--pad);
+}
+.card, .container, .content-box {
+    max-width: min(90vw, 1000px);
+    max-height: min(80vh, 700px);
+}
+.feature-list, .bullet-list { gap: clamp(0.4rem, 1vh, 1rem); }
+.feature-list li, .bullet-list li { font-size: var(--tb); line-height: 1.4; }
+img, .image-container { max-width: 100%; max-height: min(50vh, 400px); object-fit: contain; }
+
+@media (max-height: 700px) {
+    :root { --pad: clamp(0.75rem, 3vw, 2rem); --gap: clamp(0.4rem, 1.5vw, 1rem); --t1: clamp(1.25rem, 4.5vw, 2.5rem); --t2: clamp(1rem, 3vw, 1.75rem); }
+}
+@media (max-height: 600px) {
+    :root { --pad: clamp(0.5rem, 2.5vw, 1.5rem); --gap: clamp(0.3rem, 1vw, 0.75rem); --t1: clamp(1.1rem, 4vw, 2rem); --tb: clamp(0.7rem, 1.2vw, 0.95rem); }
+    .nav-dots, .keyboard-hint, .decorative { display: none; }
+}
+@media (max-height: 500px) {
+    :root { --pad: clamp(0.4rem, 2vw, 1rem); --t1: clamp(1rem, 3.5vw, 1.5rem); --t2: clamp(0.9rem, 2.5vw, 1.25rem); --tb: clamp(0.65rem, 1vw, 0.85rem); }
+}
+@media (max-width: 600px) {
+    :root { --t1: clamp(1.25rem, 7vw, 2.5rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+    html { scroll-behavior: auto; }
+}
+
+/* ==========================================
+   BASE
+   ========================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); font-family: var(--font-b); color: var(--white); }
+
+/* ==========================================
+   PROGRESS BAR
+   ========================================== */
+.progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: var(--orange); width: 0%;
+    z-index: 1000; transition: width 0.35s ease;
+}
+
+/* ==========================================
+   NAV DOTS
+   ========================================== */
+.nav-dots {
+    position: fixed; right: clamp(0.6rem, 1.2vw, 1.25rem); top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 0.45rem; z-index: 100;
+}
+.nav-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--g3); cursor: pointer;
+    transition: all 0.3s ease; border: none; padding: 0;
+}
+.nav-dot.active { background: var(--orange); transform: scale(1.55); }
+.nav-dot:hover:not(.active) { background: var(--g2); }
+
+/* ==========================================
+   KEYBOARD HINT
+   ========================================== */
+.keyboard-hint {
+    position: fixed; bottom: clamp(0.5rem, 1.2vh, 1.2rem); left: 50%;
+    transform: translateX(-50%);
+    font-size: var(--te); color: var(--g3);
+    letter-spacing: 0.1em; font-family: var(--font-b); z-index: 50; pointer-events: none;
+}
+
+/* ==========================================
+   SLIDE LABEL (top-right corner)
+   ========================================== */
+.slide-label {
+    position: absolute; top: clamp(0.8rem, 1.5vw, 1.5rem); right: clamp(0.8rem, 1.5vw, 1.5rem);
+    font-family: var(--font-d); font-size: var(--te); color: var(--g3); letter-spacing: 0.1em;
+    z-index: 5;
+}
+
+/* ==========================================
+   REVEAL ANIMATIONS
+   ========================================== */
+.reveal {
+    opacity: 0; transform: translateY(22px);
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+.reveal:nth-child(1) { transition-delay: 0.05s; }
+.reveal:nth-child(2) { transition-delay: 0.14s; }
+.reveal:nth-child(3) { transition-delay: 0.23s; }
+.reveal:nth-child(4) { transition-delay: 0.32s; }
+.reveal:nth-child(5) { transition-delay: 0.41s; }
+.reveal:nth-child(6) { transition-delay: 0.50s; }
+
+.reveal-l { opacity: 0; transform: translateX(-28px); transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
+.reveal-r { opacity: 0; transform: translateX(28px); transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
+.slide.visible .reveal-l, .slide.visible .reveal-r { opacity: 1; transform: translateX(0); }
+
+/* ==========================================
+   SHARED COMPONENTS
+   ========================================== */
+.eyebrow {
+    font-family: var(--font-b); font-size: var(--te);
+    font-weight: 600; color: var(--orange);
+    text-transform: uppercase; letter-spacing: 0.16em;
+    margin-bottom: clamp(0.3rem, 0.6vw, 0.6rem);
+}
+.eyebrow-dim { color: var(--g2); }
+.speaker-tag {
+    font-size: var(--ts); color: var(--g2);
+    margin-bottom: clamp(0.4rem, 0.8vw, 0.75rem);
+}
+.speaker-tag span { color: var(--g1); font-weight: 600; }
+
+.insight-box {
+    background: var(--orange); color: var(--on-orange);
+    padding: clamp(0.55rem, 1vw, 0.85rem) clamp(0.75rem, 1.4vw, 1.15rem);
+    border-radius: 2px;
+    font-size: clamp(0.68rem, 1.05vw, 0.88rem);
+    font-weight: 600; font-style: italic; line-height: 1.45;
+    margin-bottom: clamp(0.5rem, 1vw, 0.9rem); max-width: 700px;
+}
+
+.bullet-list {
+    list-style: none; display: flex; flex-direction: column;
+    gap: clamp(0.3rem, 0.65vh, 0.65rem); max-width: 700px;
+    overflow: hidden;
+}
+.bullet-list li {
+    font-size: var(--tb); color: var(--g1); line-height: 1.45;
+    padding-left: 1.2em; position: relative;
+}
+.bullet-list li::before {
+    content: '▸'; color: var(--orange);
+    position: absolute; left: 0; font-size: 0.65em; top: 0.25em;
+}
+.bullet-list li strong { color: var(--white); font-weight: 600; }
+.bullet-list li code {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em; color: var(--orange);
+    background: rgba(255,87,34,0.1); padding: 0.1em 0.3em; border-radius: 2px;
+}
+
+/* ==========================================
+   CONTENT SLIDES (4, 5, 8, 9, 12, 13)
+   ========================================== */
+.scw {
+    /* Slide Content Wrapper */
+    padding: var(--pad); display: flex; flex-direction: column;
+    justify-content: center; height: 100%; overflow: hidden;
+    gap: clamp(0.3rem, 0.6vh, 0.6rem);
+}
+.content-body {
+    border-left: 3px solid var(--orange);
+    padding-left: clamp(1.2rem, 2.4vw, 2rem);
+    display: flex; flex-direction: column;
+    gap: clamp(0.3rem, 0.6vh, 0.6rem);
+    overflow: hidden;
+}
+.content-h2 {
+    font-family: var(--font-d); font-size: var(--t2);
+    letter-spacing: -0.02em; color: var(--white); line-height: 1.1;
+}
+
+/* ==========================================
+   SLIDE 1: TITLE — split left/right
+   ========================================== */
+.slide-title { flex-direction: row; background: var(--bg); }
+.title-left {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: space-between; padding: var(--pad); overflow: hidden;
+}
+.title-conf { font-size: var(--ts); color: var(--g2); letter-spacing: 0.12em; text-transform: uppercase; }
+.title-main {
+    font-family: var(--font-d);
+    font-size: clamp(2.6rem, 6vw, 5.5rem);
+    color: var(--white); line-height: 1; letter-spacing: -0.025em;
+    margin-bottom: clamp(0.6rem, 1.2vw, 1rem);
+}
+.title-main span { color: var(--orange); display: block; }
+.title-tagline { font-size: var(--tb); color: var(--g2); max-width: 400px; line-height: 1.65; }
+.title-meta { display: flex; gap: 2rem; }
+.title-meta-item { font-size: var(--ts); color: var(--g3); }
+.title-meta-item strong { display: block; color: var(--g2); font-size: var(--ts); margin-bottom: 0.15rem; font-weight: 600; }
+
+.title-right {
+    width: clamp(200px, 36%, 400px);
+    background: var(--orange); display: flex; flex-direction: column;
+    justify-content: center; padding: clamp(1.5rem, 4vw, 3.5rem);
+    position: relative; overflow: hidden;
+}
+/* Grid texture on orange */
+.title-right::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px);
+    background-size: 28px 28px; pointer-events: none;
+}
+/* Ghosted CF watermark */
+.title-right::after {
+    content: 'CF'; position: absolute; bottom: -0.1em; right: -0.05em;
+    font-family: var(--font-d); font-size: clamp(6rem, 14vw, 13rem);
+    color: rgba(0,0,0,0.07); line-height: 1; pointer-events: none;
+}
+.stat-list { list-style: none; position: relative; z-index: 2; }
+.stat-item {
+    display: flex; align-items: baseline; gap: 0.65rem;
+    padding: clamp(0.55rem, 1vh, 0.9rem) 0;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.stat-item:last-child { border-bottom: none; }
+.stat-num {
+    font-family: var(--font-d); font-size: clamp(1.7rem, 3.2vw, 2.8rem);
+    color: var(--on-orange); line-height: 1; min-width: 2.8ch;
+}
+.stat-label { font-size: var(--ts); color: rgba(0,0,0,0.6); line-height: 1.35; font-weight: 500; }
+
+/* ==========================================
+   SLIDE 2: THREE THEMES
+   ========================================== */
+.slide-themes { background: var(--bg); justify-content: center; }
+.themes-wrap { padding: var(--pad); display: flex; flex-direction: column; height: 100%; gap: var(--gap); justify-content: center; overflow: hidden; }
+.themes-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(0.7rem, 1.4vw, 1.2rem); }
+.theme-block {
+    background: var(--g4); border: 1px solid var(--g3); border-top: 3px solid var(--orange);
+    padding: clamp(0.9rem, 1.8vw, 1.4rem); border-radius: 2px;
+    transition: border-color 0.3s, background 0.3s;
+}
+.theme-block:hover { border-color: var(--orange); background: rgba(255,87,34,0.05); }
+.theme-num {
+    font-family: var(--font-d); font-size: clamp(1.4rem, 2.8vw, 2.3rem);
+    color: var(--orange); opacity: 0.38; line-height: 1; margin-bottom: 0.4rem;
+}
+.theme-title {
+    font-family: var(--font-d); font-size: clamp(0.85rem, 1.5vw, 1.2rem);
+    color: var(--white); line-height: 1.2; margin-bottom: 0.4rem;
+}
+.theme-desc { font-size: var(--ts); color: var(--g2); line-height: 1.55; }
+
+/* ==========================================
+   SLIDES 3 / 7 / 11: DAY DIVIDERS
+   ========================================== */
+.slide-day {
+    background: var(--orange);
+    justify-content: center; align-items: flex-start; padding: var(--pad);
+    flex-direction: column;
+}
+/* Huge ghosted day number */
+.slide-day::before {
+    content: attr(data-day); position: absolute; right: -0.08em; bottom: -0.2em;
+    font-family: var(--font-d); font-size: clamp(16rem, 36vw, 32rem);
+    color: rgba(0,0,0,0.07); line-height: 1; pointer-events: none; z-index: 1;
+}
+/* Grid texture */
+.slide-day::after {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 38px 38px; pointer-events: none;
+}
+.day-content { position: relative; z-index: 2; max-width: 72%; overflow: hidden; }
+.day-label {
+    font-size: var(--te); font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.22em; color: rgba(0,0,0,0.45);
+    margin-bottom: clamp(0.25rem, 0.6vw, 0.55rem);
+}
+.day-title {
+    font-family: var(--font-d); font-size: clamp(1.8rem, 4.2vw, 3.8rem);
+    color: var(--on-orange); line-height: 1.05; letter-spacing: -0.02em;
+    margin-bottom: clamp(0.7rem, 1.4vw, 1.4rem);
+}
+.day-sessions { list-style: none; display: flex; flex-direction: column; gap: clamp(0.18rem, 0.45vh, 0.42rem); }
+.day-sessions li {
+    font-size: var(--ts); color: rgba(0,0,0,0.5); font-weight: 500;
+    padding-left: 1.1em; position: relative;
+}
+.day-sessions li::before { content: '—'; position: absolute; left: 0; color: rgba(0,0,0,0.25); }
+.day-sessions li.fave { color: rgba(0,0,0,0.72); font-weight: 700; }
+.day-sessions li.fave::before { content: '★'; color: rgba(0,0,0,0.35); }
+
+/* ==========================================
+   TWO-COLUMN SLIDES (6, 10, 14)
+   ========================================== */
+.slide-two-col { background: var(--bg); }
+.two-col-wrap { padding: var(--pad); display: flex; flex-direction: column; height: 100%; gap: var(--gap); justify-content: center; overflow: hidden; }
+.two-col-hdr { overflow: hidden; }
+.two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(0.9rem, 1.8vw, 1.8rem); max-height: min(62vh, 490px); }
+.col-card {
+    background: var(--g4); border: 1px solid var(--g3); border-left: 3px solid var(--orange);
+    padding: clamp(0.7rem, 1.4vw, 1.15rem); border-radius: 2px;
+    display: flex; flex-direction: column; gap: clamp(0.28rem, 0.55vh, 0.5rem); overflow: hidden;
+}
+.col-card-tag { font-size: var(--te); color: var(--orange); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+.col-card-title { font-family: var(--font-d); font-size: clamp(0.82rem, 1.4vw, 1.15rem); color: var(--white); line-height: 1.2; }
+.col-card-list { list-style: none; display: flex; flex-direction: column; gap: clamp(0.18rem, 0.45vh, 0.4rem); }
+.col-card-list li {
+    font-size: clamp(0.62rem, 1vw, 0.82rem); color: var(--g1); line-height: 1.42;
+    padding-left: 0.95em; position: relative;
+}
+.col-card-list li::before { content: '▸'; color: var(--orange); position: absolute; left: 0; font-size: 0.62em; top: 0.22em; }
+.col-card-list li strong { color: var(--white); }
+.col-card-list li code { font-family: 'Courier New', monospace; font-size: 0.88em; color: var(--orange); }
+
+/* ==========================================
+   SLIDE 15: IDEAS GRID
+   ========================================== */
+.slide-ideas { background: var(--bg); }
+.ideas-wrap { padding: var(--pad); display: flex; flex-direction: column; height: 100%; gap: var(--gap); justify-content: center; overflow: hidden; }
+.ideas-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: clamp(0.7rem, 1.4vw, 1.15rem); max-height: min(70vh, 560px); }
+.idea-card {
+    background: var(--g4); border: 1px solid var(--g3);
+    padding: clamp(0.85rem, 1.7vw, 1.4rem); border-radius: 2px;
+    display: flex; flex-direction: column; gap: clamp(0.25rem, 0.5vh, 0.45rem);
+    overflow: hidden; transition: border-color 0.3s, background 0.3s;
+}
+.idea-card:hover { border-color: var(--orange); background: rgba(255,87,34,0.04); }
+.idea-tag { font-size: var(--te); color: var(--orange); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+.idea-title { font-family: var(--font-d); font-size: clamp(0.82rem, 1.5vw, 1.2rem); color: var(--white); line-height: 1.2; }
+.idea-desc { font-size: clamp(0.6rem, 0.92vw, 0.78rem); color: var(--g2); line-height: 1.55; }
+.idea-source { font-size: clamp(0.55rem, 0.78vw, 0.68rem); color: var(--g3); margin-top: auto; font-weight: 500; }
+
+/* ==========================================
+   SLIDE 16: CLOSING
+   ========================================== */
+.slide-closing { align-items: center; justify-content: center; flex-direction: column; }
+.closing-wrap {
+    text-align: center; padding: var(--pad);
+    display: flex; flex-direction: column; align-items: center;
+    gap: clamp(0.7rem, 1.4vw, 1.4rem); max-width: 680px; overflow: hidden;
+}
+.closing-label { font-size: var(--te); color: var(--orange); text-transform: uppercase; letter-spacing: 0.16em; font-weight: 600; }
+.closing-title { font-family: var(--font-d); font-size: clamp(2rem, 5vw, 4.5rem); color: var(--white); line-height: 1; letter-spacing: -0.02em; }
+.closing-title span { color: var(--orange); }
+.closing-sub { font-size: var(--tb); color: var(--g2); line-height: 1.65; max-width: 480px; }
+.closing-tags { display: flex; gap: 0.55rem; flex-wrap: wrap; justify-content: center; }
+.closing-tag {
+    background: var(--g4); border: 1px solid var(--g3); color: var(--g1);
+    font-size: var(--ts); padding: 0.28rem 0.7rem; border-radius: 2px; font-weight: 500;
+}
+.closing-path {
+    font-family: 'Courier New', monospace; font-size: var(--ts); color: var(--g3);
+    background: var(--g4); padding: 0.38rem 0.85rem; border-radius: 3px; border: 1px solid var(--g3);
+}
+
+/* ==========================================
+   INLINE EDITING
+   ========================================== */
+.edit-hotzone { position: fixed; top: 0; left: 0; width: 80px; height: 80px; z-index: 10000; cursor: pointer; }
+.edit-toggle {
+    position: fixed; top: 1rem; left: 1rem;
+    background: var(--orange); color: var(--on-orange); border: none;
+    padding: 0.38rem 0.78rem; border-radius: 2px;
+    font-family: var(--font-b); font-size: 0.72rem; font-weight: 700;
+    cursor: pointer; z-index: 10001; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
+.edit-toggle.active { background: #4caf50; color: #fff; }
+body.editing [contenteditable="true"] {
+    outline: 1px dashed rgba(255,87,34,0.4);
+    background: rgba(255,87,34,0.04); border-radius: 2px; cursor: text;
+}
+.save-notice {
+    position: fixed; bottom: 1.2rem; left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: #4caf50; color: #fff;
+    padding: 0.35rem 1rem; border-radius: 2px;
+    font-size: 0.72rem; font-weight: 700; font-family: var(--font-b);
+    opacity: 0; transition: all 0.3s ease; z-index: 10002; pointer-events: none;
+}
+.save-notice.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Mobile */
+@media (max-width: 768px) {
+    .slide-title { flex-direction: column; }
+    .title-right { width: 100%; min-height: 32vh; }
+    .two-col-grid, .ideas-grid { grid-template-columns: 1fr; }
+    .themes-grid { grid-template-columns: 1fr; }
+    .day-content { max-width: 92%; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- === CHROME === -->
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots" aria-label="Slide navigation"></nav>
+<div class="keyboard-hint">↑ ↓ space · arrows · scroll</div>
+<div class="edit-hotzone" id="editHotzone"></div>
+<button class="edit-toggle" id="editToggle" title="Edit mode (E)">✏ Edit</button>
+<div class="save-notice" id="saveNotice">Saved ✓</div>
+
+
+<!-- =============================================
+     SLIDE 01 — TITLE
+     ============================================= -->
+<section class="slide slide-title" id="s1">
+    <div class="title-left">
+        <div class="title-conf reveal">ConFoo Montréal · 2026</div>
+
+        <div>
+            <div class="eyebrow eyebrow-dim reveal" style="transition-delay:.05s">Conference Debrief</div>
+            <h1 class="title-main reveal" style="transition-delay:.14s">
+                3 Days.<br><span>18 + 2 Sessions.</span>
+            </h1>
+            <p class="title-tagline reveal" style="transition-delay:.24s">
+                Frontend · Security · Java · AI · DevOps · MLOps —<br>
+                what we saw, and what we're bringing back.
+            </p>
+        </div>
+
+        <div class="title-meta reveal" style="transition-delay:.36s">
+            <div class="title-meta-item"><strong>Where</strong>Montréal, QC</div>
+            <div class="title-meta-item"><strong>When</strong>March 2026</div>
+            <div class="title-meta-item"><strong>Theme</strong>Observe · Automate · Ship</div>
+        </div>
+    </div>
+
+    <div class="title-right reveal-r" style="transition-delay:.1s">
+        <ul class="stat-list">
+            <li class="stat-item">
+                <span class="stat-num">18</span>
+                <span class="stat-label">Sessions attended<br>across 3 tracks</span>
+            </li>
+            <li class="stat-item">
+                <span class="stat-num">5</span>
+                <span class="stat-label">AI-related talks<br>in 3 days</span>
+            </li>
+            <li class="stat-item">
+                <span class="stat-num">3</span>
+                <span class="stat-label">Themes that kept<br>repeating</span>
+            </li>
+        </ul>
+    </div>
+    <div class="slide-label">01 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 02 — THREE KEY THEMES
+     ============================================= -->
+<section class="slide slide-themes" id="s2">
+    <div class="themes-wrap">
+        <div>
+            <div class="eyebrow reveal">The Signal from the Noise</div>
+            <h2 class="reveal" style="font-family:var(--font-d);font-size:var(--t2);letter-spacing:-.02em;transition-delay:.1s">Three Ideas That Kept Coming Back</h2>
+        </div>
+        <div class="themes-grid">
+            <div class="theme-block reveal" style="transition-delay:.22s">
+                <div class="theme-num">01</div>
+                <div class="theme-title">Measure Everything</div>
+                <div class="theme-desc">Core Web Vitals, CVSS scores, JMH benchmarks, LLM token costs, distributed traces — every performance session came back to instrumentation. Optimize only what you've measured first.</div>
+            </div>
+            <div class="theme-block reveal" style="transition-delay:.34s">
+                <div class="theme-num">02</div>
+                <div class="theme-title">Git is the Control Plane</div>
+                <div class="theme-desc">GitOps extends PR discipline from code to infra, config, and DB migrations. If it's not in Git, it doesn't exist. Audit trails are automatic; rollback is free.</div>
+            </div>
+            <div class="theme-block reveal" style="transition-delay:.46s">
+                <div class="theme-num">03</div>
+                <div class="theme-title">AI is Infrastructure</div>
+                <div class="theme-desc">Five AI sessions, one message: AI is not a feature you add — it's a stack layer. It needs the same rigour as your database. Observe it, govern it, version its context.</div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-label">02 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 03 — DAY 01 DIVIDER
+     ============================================= -->
+<section class="slide slide-day" id="s3" data-day="01">
+    <div class="day-content">
+        <div class="day-label reveal">Day</div>
+        <h2 class="day-title reveal" style="transition-delay:.12s">Frontend · Security<br>AI · I/O &amp; DevOps</h2>
+        <ul class="day-sessions">
+            <li class="fave reveal" style="transition-delay:.24s">Boosting Frontend Speed — Paul Conroy ★</li>
+            <li class="fave reveal" style="transition-delay:.32s">Java Security Essentials — Anthony Dahanne ★</li>
+            <li class="reveal" style="transition-delay:.40s">AI in my CI/CD — Justine Gehring</li>
+            <li class="reveal" style="transition-delay:.48s">I/O Performance with io_uring — David Vlijmincx</li>
+            <li class="reveal" style="transition-delay:.56s">DevOps for the Age of AI: Introducing MLOps — Semira Allen</li>
+        </ul>
+    </div>
+    <div class="slide-label" style="color:rgba(0,0,0,.22)">03 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 04 — FRONTEND SPEED ★
+     ============================================= -->
+<section class="slide" id="s4">
+    <div class="scw">
+        <div class="eyebrow reveal">Day 01 · Session 01 ★ Favourite</div>
+        <div class="speaker-tag reveal" style="transition-delay:.09s">Speaker: <span>Paul Conroy</span></div>
+        <div class="content-body">
+            <h2 class="content-h2 reveal" style="transition-delay:.16s">Boosting Frontend Speed</h2>
+            <div class="insight-box reveal" style="transition-delay:.26s">
+                "You don't need deep frontend expertise — just the right metrics and the right tools."
+            </div>
+            <ul class="bullet-list">
+                <li class="reveal" style="transition-delay:.34s"><strong>Measure first</strong> — Lighthouse &amp; PageSpeed Insights; targets: CLS &lt; 0.1, LCP &lt; 2.5s, INP &lt; 200ms</li>
+                <li class="reveal" style="transition-delay:.42s"><strong>Switch images to WebP/AVIF</strong> — 25–50% smaller than JPEG with no perceptible quality loss</li>
+                <li class="reveal" style="transition-delay:.50s"><strong>Always set explicit <code>width</code> &amp; <code>height</code></strong> on <code>&lt;img&gt;</code> — browser pre-allocates space, prevents CLS</li>
+                <li class="reveal" style="transition-delay:.58s"><strong>Font subsetting</strong> + <code>font-display: swap</code> — cut a 200KB font to 30KB; eliminate invisible text (FOIT)</li>
+                <li class="reveal" style="transition-delay:.66s"><strong>Reserve ad slot space</strong> in CSS upfront — avoid the 2-click penalty and protect Core Web Vitals scores</li>
+            </ul>
+        </div>
+    </div>
+    <div class="slide-label">04 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 05 — JAVA SECURITY ★
+     ============================================= -->
+<section class="slide" id="s5">
+    <div class="scw">
+        <div class="eyebrow reveal">Day 01 · Session 02 ★ Favourite</div>
+        <div class="speaker-tag reveal" style="transition-delay:.09s">Speaker: <span>Anthony Dahanne</span></div>
+        <div class="content-body">
+            <h2 class="content-h2 reveal" style="transition-delay:.16s">Java Security Essentials</h2>
+            <div class="insight-box reveal" style="transition-delay:.26s">
+                "Generate and maintain an SBOM as part of every release — it's your security bill of lading."
+            </div>
+            <ul class="bullet-list">
+                <li class="reveal" style="transition-delay:.34s"><strong>SBOM</strong> — machine-readable inventory of all deps; formats: SPDX &amp; CycloneDX; instantly reveals vulnerable libraries</li>
+                <li class="reveal" style="transition-delay:.42s"><strong>Integrate FindSecurityBugs or SonarQube in CI</strong> — catch vulnerabilities at the PR stage, not post-deployment</li>
+                <li class="reveal" style="transition-delay:.50s"><strong>Track EOL at endoflife.date</strong> — treat framework end-of-life with same urgency as a Critical CVE</li>
+                <li class="reveal" style="transition-delay:.58s"><strong>VEX files suppress false positives</strong> — declare CVEs not exploitable in your context; reduce alert fatigue</li>
+                <li class="reveal" style="transition-delay:.66s"><strong>CVSS score ≠ real-world risk</strong> — context (exposure, exploitability) determines actual priority</li>
+            </ul>
+        </div>
+    </div>
+    <div class="slide-label">05 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 06 — AI IN CI/CD + MLOPS
+     ============================================= -->
+<section class="slide slide-two-col" id="s6">
+    <div class="two-col-wrap">
+        <div class="two-col-hdr">
+            <div class="eyebrow reveal">Day 01 · Sessions 03 &amp; 06</div>
+            <h2 class="reveal" style="font-family:var(--font-d);font-size:var(--t2);letter-spacing:-.02em;transition-delay:.1s">AI in the Dev Pipeline</h2>
+        </div>
+        <div class="two-col-grid">
+            <div class="col-card reveal-l" style="transition-delay:.22s">
+                <div class="col-card-tag">AI in CI/CD · Justine Gehring</div>
+                <div class="col-card-title">Beyond the Chatbot,<br>Beyond the IDE</div>
+                <ul class="col-card-list">
+                    <li><strong>5 capability families:</strong> Learning &amp; Knowledge, Coding Assistants, Automation &amp; Agents, Planning, Data Exploration</li>
+                    <li>AI can <strong>triage failing pipelines</strong>, read logs, identify root causes, and suggest fixes autonomously</li>
+                    <li>Integration centred around <strong>developers</strong> (not tools) drives adoption and measurable ROI — see Grainger</li>
+                </ul>
+            </div>
+            <div class="col-card reveal-r" style="transition-delay:.22s">
+                <div class="col-card-tag">MLOps · Semira Allen</div>
+                <div class="col-card-title">DevOps is Necessary<br>But Not Sufficient for ML</div>
+                <ul class="col-card-list">
+                    <li>Treat <strong>model weights, training data, and hyperparameters</strong> as first-class versioned artifacts — not just code</li>
+                    <li><strong>Monitor for data drift and model degradation</strong> in production — accuracy degrades silently without it</li>
+                    <li><strong>Feature stores</strong> eliminate training/serving skew by centralising transformation logic for training and inference</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-label">06 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 07 — DAY 02 DIVIDER
+     ============================================= -->
+<section class="slide slide-day" id="s7" data-day="02">
+    <div class="day-content">
+        <div class="day-label reveal">Day</div>
+        <h2 class="day-title reveal" style="transition-delay:.12s">Concurrency · GitOps<br>Observability &amp; AI Governance</h2>
+        <ul class="day-sessions">
+            <li class="fave reveal" style="transition-delay:.24s">Virtual Threads vs Reactive — A N M Bazlur Rahman ★</li>
+            <li class="fave reveal" style="transition-delay:.32s">GitOps with FluxCD &amp; Kubeseal — Benoît des Ligneris ★</li>
+            <li class="reveal" style="transition-delay:.40s">Database DevOps with Containers — Rob Richardson</li>
+            <li class="reveal" style="transition-delay:.48s">OpenTelemetry &amp; Distributed Tracing — Marian Marinov</li>
+            <li class="reveal" style="transition-delay:.56s">Instrument and Govern AI Agents — Carl Lapierre</li>
+        </ul>
+    </div>
+    <div class="slide-label" style="color:rgba(0,0,0,.22)">07 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 08 — VIRTUAL THREADS ★
+     ============================================= -->
+<section class="slide" id="s8">
+    <div class="scw">
+        <div class="eyebrow reveal">Day 02 · Session 01 ★ Favourite</div>
+        <div class="speaker-tag reveal" style="transition-delay:.09s">Speaker: <span>A N M Bazlur Rahman</span></div>
+        <div class="content-body">
+            <h2 class="content-h2 reveal" style="transition-delay:.16s">Virtual Threads vs Reactive</h2>
+            <div class="insight-box reveal" style="transition-delay:.26s">
+                "Virtual threads make blocking-style code scale — Reactive-level throughput with imperative readability."
+            </div>
+            <ul class="bullet-list">
+                <li class="reveal" style="transition-delay:.34s"><strong>Virtual Threads (Java 21+)</strong> — JVM-managed, ~few KB each; write blocking code naturally, millions can coexist</li>
+                <li class="reveal" style="transition-delay:.42s"><strong>Choose VT</strong> for I/O-bound workloads (REST APIs, DB-heavy services) — it's now the right default</li>
+                <li class="reveal" style="transition-delay:.50s"><strong>Keep Reactive</strong> only when you need built-in backpressure — streaming pipelines, slow-consumer signalling</li>
+                <li class="reveal" style="transition-delay:.58s"><strong>Replace <code>synchronized</code> with <code>ReentrantLock</code></strong> — prevents carrier thread pinning in VT-heavy code</li>
+                <li class="reveal" style="transition-delay:.66s"><strong>CPU-bound work</strong> doesn't benefit from either — use <code>ForkJoinPool</code> or parallel streams instead</li>
+            </ul>
+        </div>
+    </div>
+    <div class="slide-label">08 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 09 — GITOPS ★
+     ============================================= -->
+<section class="slide" id="s9">
+    <div class="scw">
+        <div class="eyebrow reveal">Day 02 · Session 02 ★ Favourite</div>
+        <div class="speaker-tag reveal" style="transition-delay:.09s">Speaker: <span>Benoît des Ligneris</span></div>
+        <div class="content-body">
+            <h2 class="content-h2 reveal" style="transition-delay:.16s">GitOps with FluxCD &amp; Kubeseal</h2>
+            <div class="insight-box reveal" style="transition-delay:.26s">
+                "GitOps shifts the question: not 'what did someone deploy?' but 'what does Git say should be deployed?'"
+            </div>
+            <ul class="bullet-list">
+                <li class="reveal" style="transition-delay:.34s"><strong>Git = single source of truth</strong> for cluster state — every change is a commit with full history and rollback</li>
+                <li class="reveal" style="transition-delay:.42s"><strong>Pull-based deployment</strong> — FluxCD watches the repo; CI never holds cluster credentials, reducing attack surface</li>
+                <li class="reveal" style="transition-delay:.50s"><strong>Kubeseal</strong> — asymmetric encryption makes secrets safe to commit; only the cluster can decrypt them</li>
+                <li class="reveal" style="transition-delay:.58s"><strong>Reconciliation self-heals drift</strong> — manual <code>kubectl</code> changes get reverted automatically</li>
+                <li class="reveal" style="transition-delay:.66s"><strong>Disaster recovery for free</strong> — point a new cluster at the repo and reconciliation rebuilds everything</li>
+            </ul>
+        </div>
+    </div>
+    <div class="slide-label">09 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 10 — OBSERVABILITY (TWO COLUMNS)
+     ============================================= -->
+<section class="slide slide-two-col" id="s10">
+    <div class="two-col-wrap">
+        <div class="two-col-hdr">
+            <div class="eyebrow reveal">Day 02 · Sessions 04 &amp; 05</div>
+            <h2 class="reveal" style="font-family:var(--font-d);font-size:var(--t2);letter-spacing:-.02em;transition-delay:.1s">Observe Everything</h2>
+        </div>
+        <div class="two-col-grid">
+            <div class="col-card reveal-l" style="transition-delay:.22s">
+                <div class="col-card-tag">OpenTelemetry · Marian Marinov</div>
+                <div class="col-card-title">Distributed Tracing<br>at Scale</div>
+                <ul class="col-card-list">
+                    <li><strong>OTel Collector</strong> decouples services from observability backends — swap Jaeger for Tempo without touching code</li>
+                    <li><strong>Java auto-instrumentation</strong> (<code>-javaagent:</code>) instruments Spring Boot, JDBC, HTTP clients — zero code changes</li>
+                    <li><strong>Context propagation</strong> across async boundaries (message queues, thread pools) is the most common tracing gap</li>
+                </ul>
+            </div>
+            <div class="col-card reveal-r" style="transition-delay:.22s">
+                <div class="col-card-tag">AI Governance · Carl Lapierre</div>
+                <div class="col-card-title">AI Agents<br>Fail Silently</div>
+                <ul class="col-card-list">
+                    <li>Standard APM won't catch <strong>hallucinations, tool misuse, or reasoning drift</strong> — dedicated LLM observability required</li>
+                    <li><strong>Track token usage from day one</strong> — cost surprises are the most common production shock for new LLM teams</li>
+                    <li><strong>Guardrails + human-in-the-loop</strong> for high-stakes actions; run LLM evals in CI like code regression tests</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-label">10 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 11 — DAY 03 DIVIDER
+     ============================================= -->
+<section class="slide slide-day" id="s11" data-day="03">
+    <div class="day-content">
+        <div class="day-label reveal">Day</div>
+        <h2 class="day-title reveal" style="transition-delay:.12s">MCP · OAuth2<br>LLM Internals · Context</h2>
+        <ul class="day-sessions">
+            <li class="fave reveal" style="transition-delay:.24s">How I Automated My Life with MCP Servers — Cedric Clyburn ★</li>
+            <li class="reveal" style="transition-delay:.32s">Effortless Apps with Azure Container Apps — Chad Green</li>
+            <li class="reveal" style="transition-delay:.40s">OAuth2: Client &amp; Server Implementation — Martin Legris</li>
+            <li class="reveal" style="transition-delay:.48s">LLM from Scratch: No Slides, Just Code — Alexis Fortin-Côté</li>
+            <li class="fave reveal" style="transition-delay:.56s">The Art of Context Engineering — Carl Lapierre ★</li>
+        </ul>
+    </div>
+    <div class="slide-label" style="color:rgba(0,0,0,.22)">11 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 12 — MCP SERVERS ★
+     ============================================= -->
+<section class="slide" id="s12">
+    <div class="scw">
+        <div class="eyebrow reveal">Day 03 · Session 01 ★ Favourite</div>
+        <div class="speaker-tag reveal" style="transition-delay:.09s">Speaker: <span>Cedric Clyburn</span></div>
+        <div class="content-body">
+            <h2 class="content-h2 reveal" style="transition-delay:.16s">Automating with MCP Servers</h2>
+            <div class="insight-box reveal" style="transition-delay:.26s">
+                "MCP turns your infrastructure into a conversational interface — ask questions, the AI runs the right commands."
+            </div>
+            <ul class="bullet-list">
+                <li class="reveal" style="transition-delay:.34s"><strong>Model Context Protocol</strong> — open standard giving AI typed access to tools (kubectl, GitHub, Prometheus, Postgres, Slack)</li>
+                <li class="reveal" style="transition-delay:.42s"><strong>Chain servers</strong> for cross-tool workflows in one prompt: "find memory-hungry pods → look up GitHub configs → open Jira ticket"</li>
+                <li class="reveal" style="transition-delay:.50s"><strong>Local stdio servers</strong> run with your own credentials — zero infrastructure, zero extra auth, just a process on your machine</li>
+                <li class="reveal" style="transition-delay:.58s"><strong>Compounding effect</strong> — each server added multiplies AI's cross-stack reasoning; vendor-neutral and growing fast</li>
+            </ul>
+        </div>
+    </div>
+    <div class="slide-label">12 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 13 — CONTEXT ENGINEERING ★
+     ============================================= -->
+<section class="slide" id="s13">
+    <div class="scw">
+        <div class="eyebrow reveal">Day 03 · Session 05 ★ Favourite</div>
+        <div class="speaker-tag reveal" style="transition-delay:.09s">Speaker: <span>Carl Lapierre</span></div>
+        <div class="content-body">
+            <h2 class="content-h2 reveal" style="transition-delay:.16s">The Art of Context Engineering</h2>
+            <div class="insight-box reveal" style="transition-delay:.26s">
+                output = LLM(context) — No hidden state, no memory. Every quality problem is a context problem.
+            </div>
+            <ul class="bullet-list">
+                <li class="reveal" style="transition-delay:.34s"><strong>Structure context with XML delimiters</strong> — models parse delimited sections more reliably than prose instructions</li>
+                <li class="reveal" style="transition-delay:.42s"><strong>Critical instructions at start AND end</strong> — the middle of long contexts receives less model attention</li>
+                <li class="reveal" style="transition-delay:.50s"><strong>Compress and summarise history</strong> — context rot is real; accumulated irrelevant turns silently degrade performance</li>
+                <li class="reveal" style="transition-delay:.58s"><strong>Split complex tasks</strong> into focused sub-calls — map-reduce patterns beat one giant prompt every time</li>
+                <li class="reveal" style="transition-delay:.66s"><strong>Retrieve, don't inject</strong> — don't include memory by default; retrieve only what's relevant to the current task</li>
+            </ul>
+        </div>
+    </div>
+    <div class="slide-label">13 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 14 — LLM INTERNALS + OAUTH2
+     ============================================= -->
+<section class="slide slide-two-col" id="s14">
+    <div class="two-col-wrap">
+        <div class="two-col-hdr">
+            <div class="eyebrow reveal">Day 03 · Sessions 03 &amp; 04</div>
+            <h2 class="reveal" style="font-family:var(--font-d);font-size:var(--t2);letter-spacing:-.02em;transition-delay:.1s">Under the Hood</h2>
+        </div>
+        <div class="two-col-grid">
+            <div class="col-card reveal-l" style="transition-delay:.22s">
+                <div class="col-card-tag">LLM from Scratch · Alexis Fortin-Côté</div>
+                <div class="col-card-title">The Transformer Pipeline<br>Demystified</div>
+                <ul class="col-card-list">
+                    <li>Pipeline: <strong>Tokenization → Embeddings → Transformer Blocks (×N) → Sampling</strong></li>
+                    <li><strong>Temperature, top-k, top-p</strong> control generation quality — the levers for AI features in our apps</li>
+                    <li>GPT-4, LLaMA, Claude, Gemini — same architecture, different <strong>scale, data, and fine-tuning</strong></li>
+                </ul>
+            </div>
+            <div class="col-card reveal-r" style="transition-delay:.22s">
+                <div class="col-card-tag">OAuth2 · Martin Legris</div>
+                <div class="col-card-title">Client &amp; Server<br>Implementation</div>
+                <ul class="col-card-list">
+                    <li><strong>Auth Code + PKCE</strong> is the current standard for all user-facing apps — Implicit and ROPC are deprecated</li>
+                    <li><strong>Client Credentials</strong> for service-to-service — clean machine auth, no user context involved</li>
+                    <li><strong>Never hand-roll OAuth2</strong> — use a library; "almost standard" provider variations will break custom code</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="slide-label">14 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 15 — IDEAS & ACTION ITEMS
+     ============================================= -->
+<section class="slide slide-ideas" id="s15">
+    <div class="ideas-wrap">
+        <div>
+            <div class="eyebrow reveal">What We're Taking Back</div>
+            <h2 class="reveal" style="font-family:var(--font-d);font-size:var(--t2);letter-spacing:-.02em;transition-delay:.1s">Ideas &amp; Action Items</h2>
+        </div>
+        <div class="ideas-grid">
+            <div class="idea-card reveal" style="transition-delay:.22s">
+                <div class="idea-tag">Now · AI Quality</div>
+                <div class="idea-title">Context-Engineered Prompt Template</div>
+                <div class="idea-desc">XML-delimited system prompt with few-shot examples and history compression logic. Apply Carl Lapierre's techniques to improve our LLM feature quality today.</div>
+                <div class="idea-source">Day 3 · Context Engineering</div>
+            </div>
+            <div class="idea-card reveal" style="transition-delay:.32s">
+                <div class="idea-tag">Near-term · Automation</div>
+                <div class="idea-title">DevOps Automation MCP Server</div>
+                <div class="idea-desc">MCP servers for our stack (Kubernetes, GitHub, our DB) — query pods, triage failing CI jobs, open PRs for dependency updates automatically.</div>
+                <div class="idea-source">Day 3 · MCP Servers</div>
+            </div>
+            <div class="idea-card reveal" style="transition-delay:.42s">
+                <div class="idea-tag">Future · AI in CI</div>
+                <div class="idea-title">AI-Powered CI Pipeline Triage Agent</div>
+                <div class="idea-desc">Agent reads failing job logs, uses MCP tools to investigate, applies guardrails + human-in-the-loop for proposed fixes. Fully instrumented with LLM observability.</div>
+                <div class="idea-source">Day 1 + Day 2 + Day 3 combined</div>
+            </div>
+            <div class="idea-card reveal" style="transition-delay:.52s">
+                <div class="idea-tag">Near-term · Infra</div>
+                <div class="idea-title">GitOps Bootstrap Template</div>
+                <div class="idea-desc">Repo template with FluxCD + Kubeseal pre-wired, Kustomize overlays for staging/production, Slack alerts via Notification Controller, disaster recovery out of the box.</div>
+                <div class="idea-source">Day 2 · GitOps with FluxCD</div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-label">15 / 16</div>
+</section>
+
+
+<!-- =============================================
+     SLIDE 16 — CLOSING
+     ============================================= -->
+<section class="slide slide-closing" id="s16">
+    <div class="closing-wrap">
+        <div class="closing-label reveal">ConFoo 2026 · Montréal</div>
+        <h2 class="closing-title reveal" style="transition-delay:.12s">
+            Observe.<br><span>Automate.</span><br>Ship.
+        </h2>
+        <p class="closing-sub reveal" style="transition-delay:.26s">
+            Full notes are in the repository.<br>
+            Questions? Let's talk about what to prioritise.
+        </p>
+        <div class="closing-tags reveal" style="transition-delay:.38s">
+            <span class="closing-tag">Frontend Speed</span>
+            <span class="closing-tag">Java Security</span>
+            <span class="closing-tag">Virtual Threads</span>
+            <span class="closing-tag">GitOps</span>
+            <span class="closing-tag">OpenTelemetry</span>
+            <span class="closing-tag">MCP Servers</span>
+            <span class="closing-tag">Context Engineering</span>
+        </div>
+        <div class="closing-path reveal" style="transition-delay:.50s">~/confoo-2026-mtl/ConFoo_Notes.md</div>
+    </div>
+    <div class="slide-label">16 / 16</div>
+</section>
+
+
+<script>
+/* ==========================================
+   SLIDE PRESENTATION CONTROLLER
+   ========================================== */
+class SlidePresentation {
+    constructor() {
+        this.slides = Array.from(document.querySelectorAll('.slide'));
+        this.currentIndex = 0;
+        this.isScrollLocked = false;
+        this.touchStartY = 0;
+        this.progressBar = document.getElementById('progressBar');
+        this.navContainer = document.getElementById('navDots');
+
+        this.buildDots();
+        this.observeSlides();
+        this.setupKeyboard();
+        this.setupTouch();
+        this.setupWheel();
+    }
+
+    /* Build one dot per slide */
+    buildDots() {
+        this.slides.forEach((_, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'nav-dot' + (i === 0 ? ' active' : '');
+            btn.setAttribute('aria-label', `Slide ${i + 1}`);
+            btn.addEventListener('click', () => this.goTo(i));
+            this.navContainer.appendChild(btn);
+        });
+        this.dots = Array.from(this.navContainer.querySelectorAll('.nav-dot'));
+    }
+
+    /* Intersection Observer triggers .visible → CSS reveal animations */
+    observeSlides() {
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const i = this.slides.indexOf(entry.target);
+                    if (i !== -1) { this.currentIndex = i; this.updateUI(); }
+                }
+            });
+        }, { threshold: 0.5 });
+        this.slides.forEach(s => io.observe(s));
+    }
+
+    /* Keyboard: arrows, space, home/end */
+    setupKeyboard() {
+        document.addEventListener('keydown', e => {
+            if (e.target.getAttribute('contenteditable') === 'true') return;
+            switch (e.key) {
+                case 'ArrowDown': case 'ArrowRight': case ' ': e.preventDefault(); this.next(); break;
+                case 'ArrowUp':   case 'ArrowLeft':           e.preventDefault(); this.prev(); break;
+                case 'Home': e.preventDefault(); this.goTo(0); break;
+                case 'End':  e.preventDefault(); this.goTo(this.slides.length - 1); break;
+            }
+        });
+    }
+
+    /* Touch swipe */
+    setupTouch() {
+        document.addEventListener('touchstart', e => { this.touchStartY = e.touches[0].clientY; }, { passive: true });
+        document.addEventListener('touchend', e => {
+            const delta = this.touchStartY - e.changedTouches[0].clientY;
+            if (Math.abs(delta) > 48) delta > 0 ? this.next() : this.prev();
+        }, { passive: true });
+    }
+
+    /* Wheel — debounce to avoid multi-slide skip */
+    setupWheel() {
+        document.addEventListener('wheel', () => {
+            if (this.isScrollLocked) return;
+            this.isScrollLocked = true;
+            setTimeout(() => { this.isScrollLocked = false; }, 850);
+        }, { passive: true });
+    }
+
+    goTo(i) {
+        if (i < 0 || i >= this.slides.length) return;
+        this.slides[i].scrollIntoView({ behavior: 'smooth' });
+        this.currentIndex = i;
+        this.updateUI();
+    }
+    next() { this.goTo(this.currentIndex + 1); }
+    prev() { this.goTo(this.currentIndex - 1); }
+
+    updateUI() {
+        const pct = this.slides.length > 1 ? (this.currentIndex / (this.slides.length - 1)) * 100 : 100;
+        this.progressBar.style.width = pct + '%';
+        this.dots.forEach((d, i) => d.classList.toggle('active', i === this.currentIndex));
+    }
+}
+
+
+/* ==========================================
+   INLINE EDITOR
+   ========================================== */
+class InlineEditor {
+    constructor() {
+        this.isActive = false;
+        this.toggle  = document.getElementById('editToggle');
+        this.notice  = document.getElementById('saveNotice');
+        this.hotzone = document.getElementById('editHotzone');
+        this.hideT   = null;
+        this.saveT   = null;
+
+        /* All text elements that should become editable */
+        this.sel = [
+            '.title-main', '.title-tagline', '.title-conf',
+            '.insight-box', '.bullet-list li', '.col-card-list li',
+            '.theme-title', '.theme-desc', '.idea-title', '.idea-desc',
+            '.day-title', '.closing-title', '.closing-sub', '.closing-path',
+            '.content-h2', '.eyebrow', '.speaker-tag',
+            'h2.reveal', '.col-card-title', '.idea-tag', '.closing-tag', '.idea-source'
+        ];
+
+        this.setupHotzone();
+        this.toggle.addEventListener('click', () => this.toggleMode());
+        document.addEventListener('keydown', e => {
+            if ((e.key === 'e' || e.key === 'E') && !e.target.getAttribute('contenteditable')) this.toggleMode();
+            if ((e.key === 's') && (e.ctrlKey || e.metaKey) && this.isActive) { e.preventDefault(); this.save(); }
+        });
+        this.loadSaved();
+    }
+
+    setupHotzone() {
+        const show = () => { clearTimeout(this.hideT); this.toggle.classList.add('show'); };
+        const hide = () => { this.hideT = setTimeout(() => { if (!this.isActive) this.toggle.classList.remove('show'); }, 400); };
+        this.hotzone.addEventListener('mouseenter', show);
+        this.hotzone.addEventListener('mouseleave', hide);
+        this.toggle.addEventListener('mouseenter', show);
+        this.toggle.addEventListener('mouseleave', hide);
+        this.hotzone.addEventListener('click', () => this.toggleMode());
+    }
+
+    toggleMode() {
+        this.isActive = !this.isActive;
+        document.body.classList.toggle('editing', this.isActive);
+        this.toggle.classList.toggle('active', this.isActive);
+        this.toggle.textContent = this.isActive ? '✓ Done' : '✏ Edit';
+        this.toggle.classList.add('show');
+        this.makeEditable(this.isActive);
+        if (!this.isActive) this.save();
+    }
+
+    makeEditable(on) {
+        this.sel.forEach(s => {
+            document.querySelectorAll(s).forEach(el => {
+                if (on) {
+                    el.setAttribute('contenteditable', 'true');
+                    el.addEventListener('input', () => { clearTimeout(this.saveT); this.saveT = setTimeout(() => this.save(), 1600); });
+                } else {
+                    el.removeAttribute('contenteditable');
+                }
+            });
+        });
+    }
+
+    save() {
+        const data = {};
+        this.sel.forEach(s => {
+            document.querySelectorAll(s).forEach((el, i) => { data[s + '_' + i] = el.innerHTML; });
+        });
+        try { localStorage.setItem('confoo-2026-debrief', JSON.stringify(data)); } catch(e) {}
+        this.notice.classList.add('show');
+        setTimeout(() => this.notice.classList.remove('show'), 2000);
+    }
+
+    loadSaved() {
+        try {
+            const raw = localStorage.getItem('confoo-2026-debrief');
+            if (!raw) return;
+            const data = JSON.parse(raw);
+            this.sel.forEach(s => {
+                document.querySelectorAll(s).forEach((el, i) => {
+                    if (data[s + '_' + i] !== undefined) el.innerHTML = data[s + '_' + i];
+                });
+            });
+        } catch(e) {}
+    }
+}
+
+/* === Boot === */
+const deck   = new SlidePresentation();
+const editor = new InlineEditor();
+</script>
+</body>
+</html>
